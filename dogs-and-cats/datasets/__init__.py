@@ -1,6 +1,6 @@
 from .preprocess import image_to_tensor, CatsDogsDataset
 from torch.utils.data import random_split, DataLoader
-from .. import config
+from . import config
 
 
 all_training_set = CatsDogsDataset(config.TRAINING_SET_DIR, is_training=True)

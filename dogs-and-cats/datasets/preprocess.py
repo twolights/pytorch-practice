@@ -14,13 +14,15 @@ LABEL_MAPPING = {
 
 
 transform = transforms.Compose([
+    transforms.CenterCrop(PICTURE_SIZE),
+    transforms.Resize(PICTURE_SIZE),
     transforms.PILToTensor(),
 ])
 
 
 def image_to_tensor(picture_path: str) -> torch.Tensor:
     with Image.open(picture_path) as image:
-        image.thumbnail((PICTURE_SIZE, PICTURE_SIZE))
+        # image.thumbnail((PICTURE_SIZE, PICTURE_SIZE))
         return transform(image) / 255.0
 
 
@@ -52,9 +54,12 @@ class CatsDogsDataset(Dataset):
 
     def __getitem__(self, index):
         image_path = self.data[index]
+        file_name = os.path.basename(image_path)
         image = image_to_tensor(image_path)
         if self.is_training:
-            label, _id, _ = image_path.split('.')
+            label, _id, _ = file_name.split('.')
+            label = LABEL_MAPPING[label]
         else:
-            label, _id = image_path.split(',')
+            label, _id = file_name.split(',')
+            label = int(label)
         return image, label

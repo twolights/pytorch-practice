@@ -1,1 +1,1 @@
-from resnet50 import create_resnet50
+from .resnet50 import create_resnet50
