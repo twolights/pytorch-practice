@@ -4,7 +4,7 @@ import torch.nn as nn
 import datasets
 import config
 import models
-import utils
+from practices import utils
 
 
 device = utils.device()
